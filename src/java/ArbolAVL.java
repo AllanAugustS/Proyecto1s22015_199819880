@@ -8,7 +8,7 @@
  * @author allan
  */
 public class ArbolAVL {
-     private NodoArbolAVL raiz;
+     public NodoArbolAVL raiz;
     public ArbolAVL(){
     
     raiz = null;
