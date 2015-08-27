@@ -35,8 +35,8 @@ public class WebGestionAdministrador {
     @WebMethod(operationName = "MostrarAdmin")
     public String MostrarAdmin() {
         //TODO write your implementation code here:
-        NodoArbolAVL nodo = ArbolAVL.arbolito.raiz;
-        String respuesta =ArbolAVL.arbolito.inOrden(nodo);
-        return respuesta;
-    }
+        NodoArbolAVL r = ArbolAVL.arbolito.raiz;
+         String Respuesta =ArbolAVL.arbolito.inOrden(r);
+         return Respuesta;
+      }
 }

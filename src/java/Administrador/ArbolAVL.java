@@ -163,15 +163,19 @@ public class ArbolAVL {
     }
      //recorridos
      //metodo para recorrer el  arbol inOrden
+    
      public String inOrden(NodoArbolAVL r){ 
-         String Respuesta=" ";
+        String Respusta="";
      if(r !=null){     
-     inOrden(r.hijoIzquierdo);     
-     Respuesta=" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena;
-     inOrden(r.hijoDerecho);
+     Respusta+=inOrden(r.hijoIzquierdo);     
+     Respusta+=" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena + "\n";
+     System.out.print(Respusta);
+     Respusta+=inOrden(r.hijoDerecho);
+     
      }
-     return Respuesta;
+     return Respusta;
      }
+     
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolAVL r){     
      if(r !=null){    
