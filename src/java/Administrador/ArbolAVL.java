@@ -1,3 +1,5 @@
+package Administrador;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -8,6 +10,7 @@
  * @author allan
  */
 public class ArbolAVL {
+    public static ArbolAVL arbolito = new ArbolAVL();
      public NodoArbolAVL raiz;
     public ArbolAVL(){
     
@@ -23,15 +26,18 @@ public class ArbolAVL {
     public NodoArbolAVL buscar(int d, NodoArbolAVL r){
     
     if(raiz==null){
-        return null;
+        return r;
     }else if(r.dato == d){
         return r;   
     }else if(r.dato<d){      
-        return buscar(d,r.hijoDerecho);    
+        return buscar(d,r.hijoDerecho);
+        
     }else{
         return buscar(d, r.hijoIzquierdo);
     }    
     }
+    
+    
     // metodo obtener factor de equilibrio
     
     public int obtenerFE(NodoArbolAVL x){
@@ -138,25 +144,33 @@ public class ArbolAVL {
      
      //metodo insertar
      
-     public void insertar(int d, String n, String co){
+     public String insertar(int d, String n, String co){
      
+    String respuesta= " ";
+    try{
      NodoArbolAVL nuevo = new NodoArbolAVL(d,n,co);
      if(raiz == null){
        raiz = nuevo;
-     }else{
-     
+       respuesta="registro exitoso";
+     }else{     
        raiz = insertarAVL(nuevo, raiz);
-     }
-     
-     }
+       respuesta="registro exitoso";
+     }  
+    }catch(Exception e){
+    respuesta="no se registro usuario";
+    }
+     return respuesta;
+    }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-     public void inOrden(NodoArbolAVL r){     
+     public String inOrden(NodoArbolAVL r){ 
+         String Respuesta=" ";
      if(r !=null){     
      inOrden(r.hijoIzquierdo);     
-     System.out.println(" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena);
+     Respuesta=" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena;
      inOrden(r.hijoDerecho);
-     }     
+     }
+     return Respuesta;
      }
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolAVL r){     
