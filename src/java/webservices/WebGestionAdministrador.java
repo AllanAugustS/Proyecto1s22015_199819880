@@ -39,4 +39,15 @@ public class WebGestionAdministrador {
          String Respuesta =ArbolAVL.arbolito.inOrden(r);
          return Respuesta;
       }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "VerificarNodo")
+    public boolean VerificarNodo(@WebParam(name = "id") int id) {
+        
+        NodoArbolAVL r = ArbolAVL.arbolito.raiz;
+        return ArbolAVL.arbolito.Miembro(id,  r);
+        
+    }
 }

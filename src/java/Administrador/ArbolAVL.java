@@ -192,4 +192,26 @@ public class ArbolAVL {
      System.out.println(" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena); 
      }     
      }
+     // verificar un nodo
+    public boolean Miembro(int Codau, NodoArbolAVL R){
+		NodoArbolAVL Aux = R;
+		boolean miembro = false;
+		while (Aux != null){
+			if (Codau==Aux.dato){
+				miembro = true;
+				Aux = null;
+			}
+			else{
+				if (Codau>Aux.dato)
+					Aux = Aux.hijoDerecho;
+                                        
+				else{
+					Aux = Aux.hijoIzquierdo;
+					if (Aux == null)
+						miembro = false;
+				}
+			}
+		}
+		return miembro;
+	}
 }
