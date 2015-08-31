@@ -214,4 +214,99 @@ public class ArbolAVL {
 		}
 		return miembro;
 	}
+    // metodo eliminar un nodo
+     
+     public boolean eliminar(int d){
+     
+         NodoArbolAVL auxiliar = raiz;
+         NodoArbolAVL padre = raiz;
+         boolean esHijoIzq = true;
+         while(auxiliar.dato != d){
+           padre = auxiliar;
+           
+           if(d<auxiliar.dato){
+             esHijoIzq = true;
+             auxiliar= auxiliar.hijoIzquierdo;
+               
+           }else{
+           
+             esHijoIzq = false;
+             auxiliar = auxiliar.hijoDerecho;
+           }
+            if(auxiliar== null){
+            
+              return false;
+            }
+         }//fin de while
+                 
+         if(auxiliar.hijoIzquierdo ==null && auxiliar.hijoDerecho==null){
+         
+            if(auxiliar== raiz){
+            
+                raiz=null;
+            }else if(esHijoIzq){
+               
+                padre.hijoIzquierdo = null;
+            }else{
+               padre.hijoDerecho = null;
+            }
+         }else if(auxiliar.hijoDerecho == null){
+          if(auxiliar== raiz){
+            
+                raiz=auxiliar.hijoIzquierdo;
+            }else if(esHijoIzq){
+               
+                padre.hijoIzquierdo = auxiliar.hijoIzquierdo;
+            }else{
+               padre.hijoDerecho = auxiliar.hijoIzquierdo;
+            }
+             
+         }else if(auxiliar.hijoIzquierdo == null){
+               if(auxiliar== raiz){
+            
+                raiz=auxiliar.hijoDerecho;
+            }else if(esHijoIzq){
+               
+                padre.hijoIzquierdo = auxiliar.hijoDerecho;
+            }else{
+               padre.hijoDerecho = auxiliar.hijoIzquierdo;
+            }
+         }else{
+         
+             NodoArbolAVL reemplazo=obtenerNodoReemplazo(auxiliar);
+             if(auxiliar == raiz){
+                raiz = reemplazo;
+             }else if(esHijoIzq){
+               padre.hijoIzquierdo = reemplazo;
+             
+             }else{
+               padre.hijoDerecho= reemplazo;
+             }
+             reemplazo.hijoIzquierdo = auxiliar.hijoIzquierdo;
+         }
+         return true;
+     }
+     
+     //metodo encargado de devolvernos el nodo reemplazo del metodo eliminar
+     
+     public NodoArbolAVL obtenerNodoReemplazo(NodoArbolAVL nodoreemp){
+     
+      NodoArbolAVL reemplazarPadre=nodoreemp;
+      NodoArbolAVL reemplazo = nodoreemp;
+      NodoArbolAVL auxiliar = nodoreemp.hijoDerecho;
+      while(auxiliar != null){
+          reemplazarPadre = reemplazo;
+          reemplazo=auxiliar;
+          auxiliar = auxiliar.hijoIzquierdo;
+      
+      }
+       if(reemplazo != nodoreemp.hijoDerecho){
+          reemplazarPadre.hijoIzquierdo = reemplazo.hijoDerecho;
+          reemplazo.hijoDerecho=nodoreemp.hijoDerecho;
+       
+       }
+       
+       return reemplazo;
+       
+     }
 }
