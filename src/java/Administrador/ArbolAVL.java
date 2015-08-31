@@ -309,4 +309,16 @@ public class ArbolAVL {
        return reemplazo;
        
      }
+     //metodo modificar nodo
+     public NodoArbolAVL modificar_contrasena(int id, String ContrasenaNueva, String correonuevo){
+        NodoArbolAVL nodo = buscar(id, raiz);
+        
+         if(nodo != null){
+         
+         nodo.contrasena = ContrasenaNueva;
+         nodo.correo = correonuevo;    
+         }
+         return nodo;
+      
+     }
 }
