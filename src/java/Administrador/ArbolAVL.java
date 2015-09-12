@@ -11,7 +11,7 @@ package Administrador;
  */
 public class ArbolAVL {
     public static ArbolAVL arbolito = new ArbolAVL();
-     public NodoArbolAVL raiz;
+    private NodoArbolAVL raiz;
     public ArbolAVL(){
     
     raiz = null;
@@ -23,21 +23,18 @@ public class ArbolAVL {
     
     }
     //buscar un nodo
-    public NodoArbolAVL buscar(int d, NodoArbolAVL r){
+    public NodoArbolAVL buscar(String d, NodoArbolAVL r){
     
     if(raiz==null){
-        return r;
-    }else if(r.dato == d){
+        return null;
+    }else if(r.correo == d){
         return r;   
-    }else if(r.dato<d){      
-        return buscar(d,r.hijoDerecho);
-        
+    }else if(r.correo.charAt(pos)<d.charAt(pos)){  //nuevo.correo.charAt(pos)<subAr.hijoIzquierdo.correo.charAt(pos)    
+        return buscar(d,r.hijoDerecho);    
     }else{
         return buscar(d, r.hijoIzquierdo);
     }    
     }
-    
-    
     // metodo obtener factor de equilibrio
     
     public int obtenerFE(NodoArbolAVL x){
@@ -91,95 +88,203 @@ public class ArbolAVL {
     
     }
      //metodo para insertar AVL
+     int pos=0;
      public NodoArbolAVL insertarAVL(NodoArbolAVL nuevo, NodoArbolAVL subAr){
      
       NodoArbolAVL nuevoPadre = subAr;
-      if(nuevo.dato<subAr.dato){
-         if(subAr.hijoIzquierdo == null){
-            subAr.hijoIzquierdo = nuevo;
-         }else{
-            subAr.hijoIzquierdo = insertarAVL(nuevo, subAr.hijoIzquierdo);
-            if((obtenerFE(subAr.hijoIzquierdo)- obtenerFE(subAr.hijoDerecho)== 2)){
-            
-               if(nuevo.dato<subAr.hijoIzquierdo.dato){
-               
-                   nuevoPadre = rotacionIzquierda(subAr);
-               }else{
-                   nuevoPadre = rotacionDobleIzquierda(subAr);
-               }
+        if(nuevo.correo.equals(subAr.correo)){
+                System.out.print("nodo duplicado\n");
+        }else if(nuevo.correo.length()==subAr.correo.length()){
+            if(nuevo.correo.charAt(pos)<subAr.correo.charAt(pos)){                  
+                if(subAr.hijoIzquierdo==null){                                            
+                    subAr.hijoIzquierdo=nuevo;  
+                }else{                                                              
+                    subAr.hijoIzquierdo=insertarAVL(nuevo,subAr.hijoIzquierdo);
+                    if(obtenerFE(subAr.hijoIzquierdo)-obtenerFE(subAr.hijoDerecho)==2){
+                        try{
+                        if(nuevo.correo.charAt(pos)<subAr.hijoIzquierdo.correo.charAt(pos))
+                            nuevoPadre=rotacionIzquierda(subAr);
+                        }catch(Exception e){
+                            nuevoPadre=rotacionDobleIzquierda(subAr);
+                        }
+                    }
+                }
+            }else if(nuevo.correo.charAt(pos)>subAr.correo.charAt(pos)){
+                if(subAr.hijoDerecho==null){
+                    subAr.hijoDerecho=nuevo;
+                }else{
+                    subAr.hijoDerecho=insertarAVL(nuevo,subAr.hijoDerecho);
+                    if(obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2){
+                        try{
+                            if(nuevo.correo.charAt(pos)>subAr.hijoDerecho.correo.charAt(pos))
+                                nuevoPadre=rotacionDerecha(subAr);
+                        }catch(Exception e){
+                            nuevoPadre=rotacionDobleDerecha(subAr);
+                        }
+
+                    }
+                }
+            }else{
+                pos++;
+                nuevoPadre=insertarAVL(nuevo, subAr);
             }
-         }
-      
-      }else if(nuevo.dato>subAr.dato){
-          if(subAr.hijoDerecho == null){
-          
-             subAr.hijoDerecho = nuevo;
-          }else{
-             subAr.hijoDerecho = insertarAVL(nuevo, subAr.hijoDerecho);
-             if((obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2)){
-               if(nuevo.dato>subAr.hijoDerecho.dato){
-                 nuevoPadre = rotacionDerecha(subAr);
-               }else{
-                 nuevoPadre = rotacionDobleDerecha(subAr);
-               }
-             }
-          }
-      
-      }else{
-      
-       System.out.println("Nodo Duplicado");
-      }
-     //Actualizando la altura
-      
-      if((subAr.hijoIzquierdo == null) && (subAr.hijoDerecho != null)){
-         subAr.fe = subAr.hijoDerecho.fe+1;
-      }else if((subAr.hijoDerecho == null)&&(subAr.hijoIzquierdo != null)){
-         subAr.fe = subAr.hijoIzquierdo.fe+1;
-      
-      }else{
-         subAr.fe = Math.max(obtenerFE(subAr.hijoIzquierdo), obtenerFE(subAr.hijoDerecho))+1;
-      }
-      return nuevoPadre;
+        }else if(nuevo.correo.length()<subAr.correo.length()){                  //el nuevo es mas corto que el guardado
+            if(nuevo.correo.length()>pos){                                      //puede que sea mas grande que la pos
+                if(nuevo.correo.charAt(pos)<subAr.correo.charAt(pos)){                  
+                    if(subAr.hijoIzquierdo==null){                                            
+                        subAr.hijoIzquierdo=nuevo;                                            
+                    }else{                                                              
+                        subAr.hijoIzquierdo=insertarAVL(nuevo,subAr.hijoIzquierdo);
+                        if(obtenerFE(subAr.hijoIzquierdo)-obtenerFE(subAr.hijoDerecho)==2){
+                            try{
+                                if(nuevo.correo.charAt(pos)<subAr.hijoIzquierdo.correo.charAt(pos)){
+                                    nuevoPadre=rotacionIzquierda(subAr);
+                                }
+                            }catch(Exception e)
+                                {
+                                nuevoPadre=rotacionDobleIzquierda(subAr);
+                            }
+                        }
+                    }
+                }else if(nuevo.correo.charAt(pos)>subAr.correo.charAt(pos)){
+                    if(subAr.hijoDerecho==null){
+                        subAr.hijoDerecho=nuevo;
+                    }else{
+                        subAr.hijoDerecho=insertarAVL(nuevo,subAr.hijoDerecho);
+                        if(obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2){
+                            try{
+                                if(nuevo.correo.charAt(pos)>subAr.hijoDerecho.correo.charAt(pos))
+                                    nuevoPadre=rotacionDerecha(subAr);
+                            }catch(Exception e){
+                                nuevoPadre=rotacionDobleDerecha(subAr);
+                            }
+
+                        }
+                    }
+                }else if(nuevo.correo==subAr.correo){
+                    System.out.print("nodo duplicado\n");
+                }else{
+                    pos++;
+                    nuevoPadre=insertarAVL(nuevo, subAr);
+                }
+            }else{                                             //no solo es el mas pequeño, sino el mas corto
+                if(subAr.hijoIzquierdo==null){
+                    subAr.hijoIzquierdo=nuevo;
+                }else{
+                    subAr.hijoIzquierdo=insertarAVL(nuevo,subAr.hijoIzquierdo);
+                    if(obtenerFE(subAr.hijoIzquierdo)-obtenerFE(subAr.hijoDerecho)==2){
+                        if(pos<subAr.correo.length()){
+                            try{
+                                if(nuevo.correo.charAt(pos)<subAr.hijoIzquierdo.correo.charAt(pos))
+                                    nuevoPadre=rotacionIzquierda(subAr);
+                            }catch(Exception e){
+                                nuevoPadre=rotacionDobleIzquierda(subAr);
+                            }
+                        }else{
+                            
+                        }
+                    }
+                }
+            }
+        }else{
+            if(subAr.correo.length()>pos){                                      //puede que sea mas grande que la pos
+                if(nuevo.correo.charAt(pos)<subAr.correo.charAt(pos)){                  
+                    if(subAr.hijoIzquierdo==null){                                            
+                        subAr.hijoIzquierdo=nuevo;                                            
+                    }else{                                                              
+                        subAr.hijoIzquierdo=insertarAVL(nuevo,subAr.hijoIzquierdo);
+                        if(obtenerFE(subAr.hijoIzquierdo)-obtenerFE(subAr.hijoDerecho)==2){
+                            try{
+                                if(nuevo.correo.charAt(pos)<subAr.hijoIzquierdo.correo.charAt(pos))
+                                    nuevoPadre=rotacionIzquierda(subAr);
+                            }catch(Exception e){
+                                nuevoPadre=rotacionDobleIzquierda(subAr);
+                            }
+                        }
+                    }
+                }else if(nuevo.correo.charAt(pos)>subAr.correo.charAt(pos)){
+                    if(subAr.hijoDerecho==null){
+                        subAr.hijoDerecho=nuevo;
+                    }else{
+                        subAr.hijoDerecho=insertarAVL(nuevo,subAr.hijoDerecho);
+                        if(obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2){
+                            try{
+                            if(nuevo.correo.charAt(pos)>subAr.hijoDerecho.correo.charAt(pos))
+                                nuevoPadre=rotacionDerecha(subAr);
+                            }catch(Exception e){
+                                nuevoPadre=rotacionDobleDerecha(subAr);
+                            }
+
+                        }
+                    }
+                }else if(nuevo.correo==subAr.correo){
+                    System.out.print("nodo duplicado\n");
+                }else{
+                    pos++;
+                    nuevoPadre=insertarAVL(nuevo, subAr);
+                }
+            }else{                                             //no solo es el mas pequeño, sino el mas corto
+                if(subAr.hijoDerecho==null){
+                    subAr.hijoDerecho=nuevo;
+                }else{
+                    subAr.hijoDerecho=insertarAVL(nuevo,subAr.hijoDerecho);
+                    if(obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2){
+                        try{
+                            if(nuevo.correo.charAt(pos)>subAr.hijoDerecho.correo.charAt(pos))
+                                nuevoPadre=rotacionDerecha(subAr);
+                        }catch(Exception e){
+                            nuevoPadre=rotacionDobleDerecha(subAr);
+                        }
+                    }
+                }
+            }
+        }
+        //actualizando la altura
+        if((subAr.hijoIzquierdo==null)&&(subAr.hijoDerecho!=null)){
+            subAr.fe=subAr.hijoDerecho.fe+1;
+        }else if((subAr.hijoDerecho==null)&&(subAr.hijoIzquierdo!=null)){
+            subAr.fe=subAr.hijoIzquierdo.fe+1;
+        }else{
+            subAr.fe=Math.max(obtenerFE(subAr.hijoDerecho),obtenerFE(subAr.hijoIzquierdo))+1;
+        }return nuevoPadre;
    }
      
      //metodo insertar
+    
+     public String insertar( String n, String co){
+     String Respuesta= "";
      
-     public String insertar(int d, String n, String co){
-     
-    String respuesta= " ";
-    try{
-     NodoArbolAVL nuevo = new NodoArbolAVL(d,n,co);
+     try{
+     NodoArbolAVL nuevo = new NodoArbolAVL(n,co);
      if(raiz == null){
        raiz = nuevo;
-       respuesta="registro exitoso";
-     }else{     
+       Respuesta = "Registro Exitoso";
+     }else{
+     
        raiz = insertarAVL(nuevo, raiz);
-       respuesta="registro exitoso";
-     }  
-    }catch(Exception e){
-    respuesta="no se registro usuario";
-    }
-     return respuesta;
-    }
+      Respuesta = "Registro Exitoso";
+        }
+     }catch( Exception e){
+       Respuesta = "No se registro Exitosamente";
+          }
+       return Respuesta;
+     }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-    
-     public String inOrden(NodoArbolAVL r){ 
-        String Respusta="";
+     
+     public String inOrden(NodoArbolAVL r){     
+     String Respuesta="";
      if(r !=null){     
-     Respusta+=inOrden(r.hijoIzquierdo);     
-     Respusta+=" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena + "\n";
-     System.out.print(Respusta);
-     Respusta+=inOrden(r.hijoDerecho);
-     
+     Respuesta+=inOrden(r.hijoIzquierdo);     
+     Respuesta+= " Correo: "+ r.correo + " Contraseña: " + r.contrasena + "\n";
+     Respuesta+=inOrden(r.hijoDerecho);
+     }     
+     return Respuesta;
      }
-     return Respusta;
-     }
-     
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolAVL r){     
      if(r !=null){    
-     System.out.println(" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena);    
+     System.out.println(" Correo: "+ r.correo + " Contraseña: " + r.contrasena);    
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
      }     
@@ -189,42 +294,21 @@ public class ArbolAVL {
      if(r !=null){            
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
-     System.out.println(" id: " +r.dato + " Correo: "+ r.correo + " Contraseña: " + r.contrasena); 
+     System.out.println(" Correo: "+ r.correo + " Contraseña: " + r.contrasena); 
      }     
      }
-     // verificar un nodo
-    public boolean Miembro(int Codau, NodoArbolAVL R){
-		NodoArbolAVL Aux = R;
-		boolean miembro = false;
-		while (Aux != null){
-			if (Codau==Aux.dato){
-				miembro = true;
-				Aux = null;
-			}
-			else{
-				if (Codau>Aux.dato)
-					Aux = Aux.hijoDerecho;
-                                        
-				else{
-					Aux = Aux.hijoIzquierdo;
-					if (Aux == null)
-						miembro = false;
-				}
-			}
-		}
-		return miembro;
-	}
-    // metodo eliminar un nodo
      
-     public boolean eliminar(int d){
+   // metodo eliminar un nodo
+     
+     public boolean eliminar(String d){
      
          NodoArbolAVL auxiliar = raiz;
          NodoArbolAVL padre = raiz;
          boolean esHijoIzq = true;
-         while(auxiliar.dato != d){
+         while(auxiliar.correo != d){
            padre = auxiliar;
            
-           if(d<auxiliar.dato){
+           if(d.charAt(pos)<auxiliar.correo.charAt(pos)){
              esHijoIzq = true;
              auxiliar= auxiliar.hijoIzquierdo;
                
@@ -287,7 +371,7 @@ public class ArbolAVL {
          return true;
      }
      
-     //metodo encargado de devolvernos el nodo reemplazo del metodo eliminar
+     //metodo encargado de devolvernos el nodo reemplazo
      
      public NodoArbolAVL obtenerNodoReemplazo(NodoArbolAVL nodoreemp){
      
@@ -309,16 +393,44 @@ public class ArbolAVL {
        return reemplazo;
        
      }
+     
      //metodo modificar nodo
-     public NodoArbolAVL modificar_contrasena(int id, String ContrasenaNueva, String correonuevo){
-        NodoArbolAVL nodo = buscar(id, raiz);
+     public NodoArbolAVL modificar_contrasena(String correo, String ContrasenaNueva){
+        NodoArbolAVL nodo =buscar(correo, raiz);
         
          if(nodo != null){
          
          nodo.contrasena = ContrasenaNueva;
-         nodo.correo = correonuevo;    
+            
          }
          return nodo;
       
      }
+     //metodo para validar administrador
+     public boolean Miembro(String correo, NodoArbolAVL R){
+		NodoArbolAVL Aux = R;
+		boolean miembro = false;
+		while (Aux != null){
+			if (correo==Aux.correo){
+				miembro = true;
+				Aux = null;
+			}
+			else{
+				if (correo.charAt(pos)>Aux.correo.charAt(pos))
+					Aux = Aux.hijoDerecho;
+                                        
+				else{
+					Aux = Aux.hijoIzquierdo;
+					if (Aux == null)
+						miembro = false;
+				}
+			}
+		}
+		return miembro;
+	}
+
+     
+    
+   
+    
 }

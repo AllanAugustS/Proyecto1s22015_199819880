@@ -21,11 +21,11 @@ public class WebGestionAdministrador {
      * Web service operation
      */
     @WebMethod(operationName = "InsertarAdministrador")
-    public String InsertarAdministrador(@WebParam(name = "id") int id, @WebParam(name = "contrasena") String contrasena, @WebParam(name = "correo") String correo) {
+    public String InsertarAdministrador( @WebParam(name = "contrasena") String contrasena, @WebParam(name = "correo") String correo) {
         //TODO write your implementation code here:
         
          
-        String respuesta=ArbolAVL.arbolito.insertar(id, contrasena, correo);
+        String respuesta=ArbolAVL.arbolito.insertar( contrasena, correo);
         return respuesta;
     }
 
@@ -35,7 +35,7 @@ public class WebGestionAdministrador {
     @WebMethod(operationName = "MostrarAdmin")
     public String MostrarAdmin() {
         //TODO write your implementation code here:
-        NodoArbolAVL r = ArbolAVL.arbolito.raiz;
+        NodoArbolAVL r = ArbolAVL.arbolito.obtenerRaiz();
          String Respuesta =ArbolAVL.arbolito.inOrden(r);
          return Respuesta;
       }
@@ -44,10 +44,10 @@ public class WebGestionAdministrador {
      * Web service operation
      */
     @WebMethod(operationName = "VerificarNodo")
-    public boolean VerificarNodo(@WebParam(name = "id") int id) {
+    public boolean VerificarNodo(@WebParam(name = "correo") String correo) {
         
-        NodoArbolAVL r = ArbolAVL.arbolito.raiz;
-        return ArbolAVL.arbolito.Miembro(id,  r);
+        NodoArbolAVL r = ArbolAVL.arbolito.obtenerRaiz();
+        return ArbolAVL.arbolito.Miembro(correo,  r);
         
     }
 }
