@@ -253,14 +253,18 @@ public class ArbolAVL {
      
      public String insertar( String n, String co){
      String Respuesta="";
+     try{
      NodoArbolAVL nuevo = new NodoArbolAVL(n,co);
      if(raiz == null){
        raiz = nuevo;
-       Respuesta+="Se registro Correctamente el Administrador";
+       Respuesta ="Se registro Correctamente el Administrador";
      }else{
      
        raiz = insertarAVL(nuevo, raiz);
-      Respuesta+="Se registro Correctamente el Administrador";
+      Respuesta ="Se registro Correctamente el Administrador";
+     }
+     }catch(Exception e){
+     Respuesta="No se registro elAdministrador";
      }
      return Respuesta;
      }
@@ -270,7 +274,7 @@ public class ArbolAVL {
      String Respuesta="";
      if(r !=null){     
      Respuesta+= inOrden(r.hijoIzquierdo);     
-     Respuesta+= " Correo: "+ r.correo + " Contraseña: " + r.contrasena;
+     Respuesta+= " Correo: "+ r.correo + " Contraseña: " + r.contrasena + "\n";
      Respuesta+=inOrden(r.hijoDerecho);
      } 
      return Respuesta;
@@ -400,17 +404,16 @@ public class ArbolAVL {
          return nodo;
       
      }
-     public boolean Miembro(String Correo, NodoArbolAVL R){
-	int poss=0;	
+     public boolean Miembro(String correo, NodoArbolAVL R){	
          NodoArbolAVL Aux = R;
 		boolean miembro = false;
 		while (Aux != null){
-			if (Correo==Aux.correo ){
+			if (correo==Aux.correo ){
 				miembro = true;
 				Aux = null;
 			}
 			else{
-				if (Correo.charAt(poss)<Aux.correo.charAt(poss) )
+				if (correo.charAt(pos)>Aux.correo.charAt(pos) )
 					Aux = Aux.hijoDerecho;
 				else{
 					Aux = Aux.hijoIzquierdo;
