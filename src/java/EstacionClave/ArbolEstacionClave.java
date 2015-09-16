@@ -140,17 +140,22 @@ public class ArbolEstacionClave {
      
      //metodo insertar
      
-     public void insertar(int clave, String nom, String contra, String rut){
-     
+     public String insertar(int clave, String nom, String contra, String rut){
+     String Respuesta="";
+     try{
      NodoArbolEstacionClave nuevo = new NodoArbolEstacionClave(clave,nom,contra,rut);
      if(raiz == null){
        raiz = nuevo;
+       Respuesta="Registro exitoso";
      }else{
      
        raiz = insertarAVL(nuevo, raiz);
-      
+      Respuesta="Registro exitoso";
      }
-     
+     }catch(Exception e){
+       Respuesta="No se registro exitosamente";
+     }
+     return Respuesta;
      }
      //recorridos
      //metodo para recorrer el  arbol inOrden
@@ -287,5 +292,25 @@ public class ArbolEstacionClave {
          return nodo;
       
      }
+     public boolean Miembro(int clave, NodoArbolEstacionClave R){	
+        NodoArbolEstacionClave Aux = R;
+		boolean miembro = false;
+		while (Aux != null){
+			if (clave==Aux.IdEstacionClave ){
+				miembro = true;
+				Aux = null;
+			}
+			else{
+				if (clave>Aux.IdEstacionClave )
+					Aux = Aux.hijoDerecho;
+				else{
+					Aux = Aux.hijoIzquierdo;
+					if (Aux == null)
+						miembro = false;
+				}
+			}
+		}
+		return miembro;
+	}
      
 }

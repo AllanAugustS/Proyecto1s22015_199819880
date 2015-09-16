@@ -408,7 +408,7 @@ public class ArbolAVL {
          NodoArbolAVL Aux = R;
 		boolean miembro = false;
 		while (Aux != null){
-			if (correo==Aux.correo ){
+			if (correo.charAt(pos)==Aux.correo.charAt(pos) ){
 				miembro = true;
 				Aux = null;
 			}
