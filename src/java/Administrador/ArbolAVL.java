@@ -10,7 +10,7 @@ package Administrador;
  * @author allan
  */
 public class ArbolAVL {
-    public static ArbolAVL arbolito = new ArbolAVL();
+    public static ArbolAVL listaadmin = new ArbolAVL();
     private NodoArbolAVL raiz;
     public ArbolAVL(){
     
@@ -250,35 +250,29 @@ public class ArbolAVL {
    }
      
      //metodo insertar
-    
-     public String insertar( String n, String co){
-     String Respuesta= "";
      
-     try{
+     public String insertar( String n, String co){
+     String Respuesta="";
      NodoArbolAVL nuevo = new NodoArbolAVL(n,co);
      if(raiz == null){
        raiz = nuevo;
-       Respuesta = "Registro Exitoso";
+       Respuesta+="Se registro Correctamente el Administrador";
      }else{
      
        raiz = insertarAVL(nuevo, raiz);
-      Respuesta = "Registro Exitoso";
-        }
-     }catch( Exception e){
-       Respuesta = "No se registro Exitosamente";
-          }
-       return Respuesta;
+      Respuesta+="Se registro Correctamente el Administrador";
+     }
+     return Respuesta;
      }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-     
      public String inOrden(NodoArbolAVL r){     
      String Respuesta="";
      if(r !=null){     
-     Respuesta+=inOrden(r.hijoIzquierdo);     
-     Respuesta+= " Correo: "+ r.correo + " Contraseña: " + r.contrasena + "\n";
+     Respuesta+= inOrden(r.hijoIzquierdo);     
+     Respuesta+= " Correo: "+ r.correo + " Contraseña: " + r.contrasena;
      Respuesta+=inOrden(r.hijoDerecho);
-     }     
+     } 
      return Respuesta;
      }
      //metodo para recorrer el arbol preOrden
@@ -406,19 +400,18 @@ public class ArbolAVL {
          return nodo;
       
      }
-     //metodo para validar administrador
-     public boolean Miembro(String correo, NodoArbolAVL R){
-		NodoArbolAVL Aux = R;
+     public boolean Miembro(String Correo, NodoArbolAVL R){
+	int poss=0;	
+         NodoArbolAVL Aux = R;
 		boolean miembro = false;
 		while (Aux != null){
-			if (correo==Aux.correo){
+			if (Correo==Aux.correo ){
 				miembro = true;
 				Aux = null;
 			}
 			else{
-				if (correo.charAt(pos)>Aux.correo.charAt(pos))
+				if (Correo.charAt(poss)<Aux.correo.charAt(poss) )
 					Aux = Aux.hijoDerecho;
-                                        
 				else{
 					Aux = Aux.hijoIzquierdo;
 					if (Aux == null)
@@ -429,8 +422,15 @@ public class ArbolAVL {
 		return miembro;
 	}
 
-     
-    
-   
-    
+     //agregale el get y set de raiz
+     //aqu simon
+
+    public NodoArbolAVL getRaiz() {
+        return raiz;
+    }
+
+    public void setRaiz(NodoArbolAVL raiz) {
+        this.raiz = raiz;
+    }
+ 
 }

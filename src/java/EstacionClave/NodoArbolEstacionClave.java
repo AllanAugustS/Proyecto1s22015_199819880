@@ -11,18 +11,23 @@ package EstacionClave;
  * @author allan
  */
 public class NodoArbolEstacionClave {
-    int idEstacionClave, fe;
-    String nombre, contrasena;
-    NodoArbolEstacionClave hijoIzquierdo, hijoDerecho;
-
-    public NodoArbolEstacionClave(int idEstacionClave, String nombre, String contrasena) {
-        this.idEstacionClave = idEstacionClave;
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.fe= 0;
-        this.hijoIzquierdo= null;
-        this.hijoDerecho=null;
-    }
+     int IdEstacionClave, fe;
     
+    String contrasena, nombre,ruta;
+  
+    NodoArbolEstacionClave hijoIzquierdo, hijoDerecho;
+    
+    
+    public NodoArbolEstacionClave(int clave, String nombre,String contrasena, String ruta){
+      this.IdEstacionClave=clave;
+      this.nombre=nombre;
+      this.contrasena = contrasena;
+      this.ruta=ruta;
+      this.fe= 0;
+      this.hijoIzquierdo= null;
+      this.hijoDerecho=null;
+      
+    }
+   
     
 }

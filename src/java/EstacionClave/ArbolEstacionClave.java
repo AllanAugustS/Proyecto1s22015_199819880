@@ -9,8 +9,8 @@ package EstacionClave;
  * @author allan
  */
 public class ArbolEstacionClave {
-    public static ArbolEstacionClave arbolitoEstacionClave = new ArbolEstacionClave();
-     public NodoArbolEstacionClave raiz;
+     public static ArbolEstacionClave arbolestacionclave = new ArbolEstacionClave();
+     private NodoArbolEstacionClave raiz;
     public ArbolEstacionClave(){
     
     raiz = null;
@@ -25,18 +25,15 @@ public class ArbolEstacionClave {
     public NodoArbolEstacionClave buscar(int d, NodoArbolEstacionClave r){
     
     if(raiz==null){
-        return r;
-    }else if(r.idEstacionClave == d){
+        return null;
+    }else if(r.IdEstacionClave == d){
         return r;   
-    }else if(r.idEstacionClave<d){      
-        return buscar(d,r.hijoDerecho);
-        
+    }else if(r.IdEstacionClave<d){      
+        return buscar(d,r.hijoDerecho);    
     }else{
         return buscar(d, r.hijoIzquierdo);
     }    
     }
-    
-    
     // metodo obtener factor de equilibrio
     
     public int obtenerFE(NodoArbolEstacionClave x){
@@ -93,14 +90,14 @@ public class ArbolEstacionClave {
      public NodoArbolEstacionClave insertarAVL(NodoArbolEstacionClave nuevo, NodoArbolEstacionClave subAr){
      
       NodoArbolEstacionClave nuevoPadre = subAr;
-      if(nuevo.idEstacionClave<subAr.idEstacionClave){
+      if(nuevo.IdEstacionClave<subAr.IdEstacionClave){
          if(subAr.hijoIzquierdo == null){
             subAr.hijoIzquierdo = nuevo;
          }else{
             subAr.hijoIzquierdo = insertarAVL(nuevo, subAr.hijoIzquierdo);
             if((obtenerFE(subAr.hijoIzquierdo)- obtenerFE(subAr.hijoDerecho)== 2)){
             
-               if(nuevo.idEstacionClave<subAr.hijoIzquierdo.idEstacionClave){
+               if(nuevo.IdEstacionClave<subAr.hijoIzquierdo.IdEstacionClave){
                
                    nuevoPadre = rotacionIzquierda(subAr);
                }else{
@@ -109,14 +106,14 @@ public class ArbolEstacionClave {
             }
          }
       
-      }else if(nuevo.idEstacionClave>subAr.idEstacionClave){
+      }else if(nuevo.IdEstacionClave>subAr.IdEstacionClave){
           if(subAr.hijoDerecho == null){
           
              subAr.hijoDerecho = nuevo;
           }else{
              subAr.hijoDerecho = insertarAVL(nuevo, subAr.hijoDerecho);
              if((obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2)){
-               if(nuevo.idEstacionClave>subAr.hijoDerecho.idEstacionClave){
+               if(nuevo.IdEstacionClave>subAr.hijoDerecho.IdEstacionClave){
                  nuevoPadre = rotacionDerecha(subAr);
                }else{
                  nuevoPadre = rotacionDobleDerecha(subAr);
@@ -143,42 +140,31 @@ public class ArbolEstacionClave {
      
      //metodo insertar
      
-     public String insertar(int d, String n, String co){
+     public void insertar(int clave, String nom, String contra, String rut){
      
-    String respuesta= " ";
-    try{
-     NodoArbolEstacionClave nuevo = new NodoArbolEstacionClave(d,n,co);
+     NodoArbolEstacionClave nuevo = new NodoArbolEstacionClave(clave,nom,contra,rut);
      if(raiz == null){
        raiz = nuevo;
-       respuesta="registro exitoso";
-     }else{     
+     }else{
+     
        raiz = insertarAVL(nuevo, raiz);
-       respuesta="registro exitoso";
-     }  
-    }catch(Exception e){
-    respuesta="no se registro usuario";
-    }
-     return respuesta;
-    }
+      
+     }
+     
+     }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-    
-     public String inOrden(NodoArbolEstacionClave r){ 
-        String Respusta="";
+     public void inOrden(NodoArbolEstacionClave r){     
      if(r !=null){     
-     Respusta+=inOrden(r.hijoIzquierdo);     
-     Respusta+=" id: " +r.idEstacionClave + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena + "\n";
-     System.out.print(Respusta);
-     Respusta+=inOrden(r.hijoDerecho);
-     
+     inOrden(r.hijoIzquierdo);     
+     System.out.println("IdEstacionClave: " +r.IdEstacionClave + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena );
+     inOrden(r.hijoDerecho);
+     }     
      }
-     return Respusta;
-     }
-     
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolEstacionClave r){     
      if(r !=null){    
-     System.out.println(" id: " +r.idEstacionClave + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena);    
+     System.out.println("IdEstacionClave: " +r.IdEstacionClave + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena);    
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
      }     
@@ -188,42 +174,21 @@ public class ArbolEstacionClave {
      if(r !=null){            
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
-     System.out.println(" id: " +r.idEstacionClave + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena); 
+     System.out.println("IdEstacionClave: " +r.IdEstacionClave + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena); 
      }     
      }
-     // verificar un nodo
-    public boolean Miembro(int Codau, NodoArbolEstacionClave R){
-		NodoArbolEstacionClave Aux = R;
-		boolean miembro = false;
-		while (Aux != null){
-			if (Codau==Aux.idEstacionClave){
-				miembro = true;
-				Aux = null;
-			}
-			else{
-				if (Codau>Aux.idEstacionClave)
-					Aux = Aux.hijoDerecho;
-                                        
-				else{
-					Aux = Aux.hijoIzquierdo;
-					if (Aux == null)
-						miembro = false;
-				}
-			}
-		}
-		return miembro;
-	}
-    // metodo eliminar un nodo
+     
+   // metodo eliminar un nodo
      
      public boolean eliminar(int d){
      
          NodoArbolEstacionClave auxiliar = raiz;
          NodoArbolEstacionClave padre = raiz;
          boolean esHijoIzq = true;
-         while(auxiliar.idEstacionClave != d){
+         while(auxiliar.IdEstacionClave != d){
            padre = auxiliar;
            
-           if(d<auxiliar.idEstacionClave){
+           if(d<auxiliar.IdEstacionClave){
              esHijoIzq = true;
              auxiliar= auxiliar.hijoIzquierdo;
                
@@ -286,7 +251,7 @@ public class ArbolEstacionClave {
          return true;
      }
      
-     //metodo encargado de devolvernos el nodo reemplazo del metodo eliminar
+     //metodo encargado de devolvernos el nodo reemplazo
      
      public NodoArbolEstacionClave obtenerNodoReemplazo(NodoArbolEstacionClave nodoreemp){
      
@@ -308,16 +273,19 @@ public class ArbolEstacionClave {
        return reemplazo;
        
      }
+     
      //metodo modificar nodo
-     public NodoArbolEstacionClave modificar_contrasena(int id, String nombrenuevo, String ContrasenaNueva){
-        NodoArbolEstacionClave nodo = buscar(id, raiz);
+     public NodoArbolEstacionClave modificar_contrasena(int id,  String nombrenuevo,String ContrasenaNueva){
+        NodoArbolEstacionClave nodo =buscar(id, raiz);
         
          if(nodo != null){
-         nodo.nombre = nombrenuevo;
+         
          nodo.contrasena = ContrasenaNueva;
-             
+         nodo.nombre = nombrenuevo;
+         
          }
          return nodo;
       
      }
+     
 }

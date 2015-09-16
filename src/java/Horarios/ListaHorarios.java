@@ -2,23 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Bus;
+package Horarios;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 /**
  *
  * @author allan
  */
-public class ListaBus {
-    
-     NodoBus Cabeza;
-    NodoBus Fin;
+public class ListaHorarios {
+    public static ListaHorarios listaasignaciones = new ListaHorarios();
+    public NodoHorarios Cabeza;
+    public NodoHorarios Fin;
     static int cantidad;
 
-    public ListaBus() {
+    public ListaHorarios() {
     cantidad=0;
     Cabeza = null;
     Fin = null; 
@@ -27,10 +28,14 @@ public class ListaBus {
     public int size() {
         return cantidad;
     }
+    public NodoHorarios obtenerCabeza(){
+     return Cabeza;
+    
+    }
     
     // metodo para indicar que la lista esta vacia
     
-    private boolean EstaVacia(){
+   public boolean EstaVacia(){
     
     boolean vacia = false;
     if(Cabeza == null){
@@ -43,7 +48,7 @@ public class ListaBus {
     //fin de metodo estavacia
     // metodo enlaza los dos nodos mediante enlace doble
     
-    private void enlazar(NodoBus nodoA, NodoBus nodoB){
+    public void enlazar(NodoHorarios nodoA, NodoHorarios nodoB){
     
         nodoA.siguiente = nodoB;
         nodoB.anterior= nodoA;
@@ -53,8 +58,8 @@ public class ListaBus {
     
     //metodo insertar al final de la lista
     
-    public void insertarFinal(int id){
-    NodoBus nuevo = new NodoBus(id);
+    public void insertarFinal(String rut,String horaI,String horaF, String fec,int clavebus,int claveChofer){
+    NodoHorarios nuevo = new NodoHorarios(rut,horaI,horaF,fec,clavebus,claveChofer);
     if(EstaVacia()){
     Cabeza = nuevo;
     Fin = nuevo;
@@ -72,7 +77,7 @@ public class ListaBus {
     
         if(!EstaVacia()){
         
-        NodoBus primero = Cabeza.siguiente;
+        NodoHorarios primero = Cabeza.siguiente;
         if(primero == null){
         Cabeza=null;
         Fin = null;
@@ -88,7 +93,7 @@ public class ListaBus {
     //metodo eliminar al final de la lista
     public void EliminarFinal(){
     if(!EstaVacia()){
-    NodoBus ultimo = Fin.anterior;
+    NodoHorarios ultimo = Fin.anterior;
     if(ultimo == null){
     Cabeza= null;
     Fin = null;
@@ -100,12 +105,12 @@ public class ListaBus {
     }
     //fin de metodo elimianr al final de la lista
     //metodo buscar, devuelve una referencia al nodo buscado sino se encuentra devuelve null
-    public NodoBus Buscar(int id){
+    public NodoHorarios Buscar(String fecha){
     
-        NodoBus buscado = null;
-        NodoBus iterador = Cabeza;
+        NodoHorarios buscado = null;
+        NodoHorarios iterador = Cabeza;
         while (buscado == null & iterador != null){
-        if(iterador.idBus == id){
+        if(iterador.fecha == fecha){
         buscado= iterador;
         }
         iterador = iterador.siguiente;
@@ -115,27 +120,29 @@ public class ListaBus {
     //fin de metodo buscar
     //metodo para mostrar la lista
     
-    public void mostrar(){
-    
-    NodoBus iterador = Cabeza;
+    public String mostrar(){
+    String respuesta="";
+    NodoHorarios iterador = Cabeza;
     while(iterador != null){
-    System.out.print(iterador.idBus +"\n");
+    respuesta+= "Hora Inicial:" + iterador.horarioInicio + " Hora Final: " + iterador.horarioFinal + " Fecha: " + iterador.fecha + " id Bus: " + iterador.idBus + " id Chofer : " + iterador.idChofer + "\n";
     iterador = iterador.siguiente;
-    }          
     }
-    //fin metodo mostrar lista
-    //metodo eliminar nodo
-    public void eliminar(int id){
+    return respuesta;
+    }
     
-    if(this.Cabeza.getIdBus()==id){
+    
+//  
+    public void eliminar(String fecha){
+    
+    if(this.Cabeza.fecha==fecha){
         
         Cabeza= Cabeza.getSiguiente();
     }else{
-    NodoBus aux = this.Cabeza;
-    while(aux!=null && aux.getSiguiente().getIdBus() != id){ // error de  posible comparacion
+    NodoHorarios aux = this.Cabeza;
+    while(aux!=null && aux.getSiguiente().fecha != fecha){ // error de  posible comparacion
     aux = aux.getSiguiente();
     }
-    if (aux.getSiguiente().getIdBus()== id){
+    if (aux.getSiguiente().fecha== fecha){
     aux.setSiguiente(aux.getSiguiente().getSiguiente());
     
     
@@ -143,36 +150,35 @@ public class ListaBus {
     }
     }
     //fin de metodo eliminarnodo
-    public void modificar(int parametro,int nom){
+    public void modificar(String parametro,String Fec){
         
-        if(this.Cabeza.getIdBus()==parametro){       
-            int bus1 = this.Cabeza.getIdBus();           
-            if(nom != 0){//posible error de comparacion
-            bus1 =nom;
+        if(this.Cabeza.fecha==parametro){       
+            String fecha1 = this.Cabeza.fecha;           
+            if(Fec != null){
+            fecha1 =Fec;
             }
-            Cabeza.setIdBus(bus1);
+            Cabeza.setFecha(fecha1);
         }else{
-        NodoBus aux = this.Cabeza;
-        while(aux !=null && aux.getIdBus()!=parametro){ //posiboe error de comparacion
+        NodoHorarios aux = this.Cabeza;
+        while(aux !=null && aux.fecha!=parametro){ 
         aux = aux.getSiguiente();
         }
-         if(aux.getIdBus() == parametro){
-         int bus1= aux.getIdBus();
-           if(nom != 0){//posible error de comparacion
-           bus1= nom;
+         if(aux.fecha == parametro){
+         String fecha1= aux.fecha;
+           if(Fec != null){//posible error de comparacion
+           fecha1= Fec;
            }
-           aux.setIdBus(bus1);
+           aux.setFecha(fecha1);
          }  
         }
     }
     //fin de metodo modificar
-    //metodo get para recorrer mi lista
-    public NodoBus get(int pIndex){
-        NodoBus frst = null;
-        NodoBus next = null; 
-        NodoBus Last = null;
-        NodoBus cmdin = Cabeza;
-        
+    //metodo get para recorrer la lista
+    public NodoHorarios get(int pIndex){
+        NodoHorarios frst = null;
+        NodoHorarios next = null; 
+        NodoHorarios Last = null;
+        NodoHorarios cmdin = Cabeza;
         if(pIndex==0){
             Last=Cabeza;
         }else if(pIndex ==(cantidad-1)){
@@ -183,11 +189,12 @@ public class ListaBus {
                 cmdin= next;
                 if(i==pIndex){
                     Last = cmdin;
-//                    if(cmdin.getSiguiente() == null){
-//                        Last = cmdin.getAnterior();                    
-//                    }else {
-//                        Last = cmdin;
-//                    }
+                    if(cmdin.getSiguiente() == null){
+                        Last = cmdin.getAnterior();
+                    
+                    }else {
+                        Last = cmdin;
+                    }
                 }          
             }
         }
@@ -202,7 +209,7 @@ public class ListaBus {
     PrintWriter escritor = null;
     try{
     
-    archivoDot=new FileWriter("SalidaListaBus.dot");//poner imagen para lista
+    archivoDot=new FileWriter("SalidaListaHorarios.dot");//poner imagen para lista
     escritor = new PrintWriter(archivoDot);
     escritor.println(Source);
     }catch(IOException e){
@@ -251,9 +258,9 @@ public class ListaBus {
         String enlaces="";
         int cont=0;
         if(!EstaVacia()){
-        NodoBus temporal = Cabeza;
+        NodoHorarios temporal = Cabeza;
         while(temporal!=null){
-           r=r+"struct"+cont+" [label=\"<f0>IdBus: "+temporal.idBus + "\"];\n";
+           r=r+"struct"+cont+" [label=\"<f0>Fecha: "+temporal.fecha + "\"];\n";
            cont++;
            temporal = temporal.getSiguiente();
         }

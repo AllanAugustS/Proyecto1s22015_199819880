@@ -9,18 +9,23 @@ package EstacionGeneral;
  * @author allan
  */
 public class NodoArbolEstacionGeneral {
-    int idEstacionGeneral, fe;
-    String nombre, contrasena;
+    int IdEstacionGeneral, fe;
+    
+    String contrasena, nombre, ruta;
+  
     NodoArbolEstacionGeneral hijoIzquierdo, hijoDerecho;
-
-    public NodoArbolEstacionGeneral(int idEstacionGeneral, String nombre, String contrasena) {
-        this.idEstacionGeneral = idEstacionGeneral;
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.fe= 0;
-        this.hijoIzquierdo= null;
-        this.hijoDerecho=null;
+   
+    
+    
+    public NodoArbolEstacionGeneral(int clave, String nombre,String contrasena,String ruta){
+      this.IdEstacionGeneral=clave;
+      this.nombre=nombre;
+      this.contrasena = contrasena;
+      this.ruta = ruta;
+      this.fe= 0;
+      this.hijoIzquierdo= null;
+      this.hijoDerecho=null;
+      
     }
-    
-    
+   
 }

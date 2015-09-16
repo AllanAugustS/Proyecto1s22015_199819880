@@ -9,10 +9,9 @@ package EstacionGeneral;
  * @author allan
  */
 public class ArbolEstacionGeneral {
-     public static ArbolEstacionGeneral arbolitoEstacionGeneral = new ArbolEstacionGeneral();
-     public NodoArbolEstacionGeneral raiz;
-     
-     public ArbolEstacionGeneral(){
+     public static ArbolEstacionGeneral arbolestaciongeneral = new ArbolEstacionGeneral();
+     private NodoArbolEstacionGeneral raiz;
+    public ArbolEstacionGeneral(){
     
     raiz = null;
     
@@ -26,18 +25,15 @@ public class ArbolEstacionGeneral {
     public NodoArbolEstacionGeneral buscar(int d, NodoArbolEstacionGeneral r){
     
     if(raiz==null){
-        return r;
-    }else if(r.idEstacionGeneral == d){
+        return null;
+    }else if(r.IdEstacionGeneral == d){
         return r;   
-    }else if(r.idEstacionGeneral<d){      
-        return buscar(d,r.hijoDerecho);
-        
+    }else if(r.IdEstacionGeneral<d){      
+        return buscar(d,r.hijoDerecho);    
     }else{
         return buscar(d, r.hijoIzquierdo);
     }    
     }
-    
-    
     // metodo obtener factor de equilibrio
     
     public int obtenerFE(NodoArbolEstacionGeneral x){
@@ -61,7 +57,7 @@ public class ArbolEstacionGeneral {
     }
     // rotacion simple derecha
     public NodoArbolEstacionGeneral rotacionDerecha(NodoArbolEstacionGeneral c){
-       NodoArbolEstacionGeneral aux= c.hijoDerecho;
+        NodoArbolEstacionGeneral aux= c.hijoDerecho;
         c.hijoDerecho= aux.hijoIzquierdo;
         aux.hijoIzquierdo= c;
         c.fe =Math.max(obtenerFE(c.hijoIzquierdo),obtenerFE(c.hijoDerecho))+1;
@@ -94,14 +90,14 @@ public class ArbolEstacionGeneral {
      public NodoArbolEstacionGeneral insertarAVL(NodoArbolEstacionGeneral nuevo, NodoArbolEstacionGeneral subAr){
      
       NodoArbolEstacionGeneral nuevoPadre = subAr;
-      if(nuevo.idEstacionGeneral<subAr.idEstacionGeneral){
+      if(nuevo.IdEstacionGeneral<subAr.IdEstacionGeneral){
          if(subAr.hijoIzquierdo == null){
             subAr.hijoIzquierdo = nuevo;
          }else{
             subAr.hijoIzquierdo = insertarAVL(nuevo, subAr.hijoIzquierdo);
             if((obtenerFE(subAr.hijoIzquierdo)- obtenerFE(subAr.hijoDerecho)== 2)){
             
-               if(nuevo.idEstacionGeneral<subAr.hijoIzquierdo.idEstacionGeneral){
+               if(nuevo.IdEstacionGeneral<subAr.hijoIzquierdo.IdEstacionGeneral){
                
                    nuevoPadre = rotacionIzquierda(subAr);
                }else{
@@ -110,14 +106,14 @@ public class ArbolEstacionGeneral {
             }
          }
       
-      }else if(nuevo.idEstacionGeneral>subAr.idEstacionGeneral){
+      }else if(nuevo.IdEstacionGeneral>subAr.IdEstacionGeneral){
           if(subAr.hijoDerecho == null){
           
              subAr.hijoDerecho = nuevo;
           }else{
              subAr.hijoDerecho = insertarAVL(nuevo, subAr.hijoDerecho);
              if((obtenerFE(subAr.hijoDerecho)-obtenerFE(subAr.hijoIzquierdo)==2)){
-               if(nuevo.idEstacionGeneral>subAr.hijoDerecho.idEstacionGeneral){
+               if(nuevo.IdEstacionGeneral>subAr.hijoDerecho.IdEstacionGeneral){
                  nuevoPadre = rotacionDerecha(subAr);
                }else{
                  nuevoPadre = rotacionDobleDerecha(subAr);
@@ -144,42 +140,31 @@ public class ArbolEstacionGeneral {
      
      //metodo insertar
      
-     public String insertar(int d, String n, String co){
+     public void insertar(int clave, String nom, String contra, String rut){
      
-    String respuesta= " ";
-    try{
-    NodoArbolEstacionGeneral nuevo = new NodoArbolEstacionGeneral(d,n,co);
+     NodoArbolEstacionGeneral nuevo = new NodoArbolEstacionGeneral(clave,nom,contra, rut);
      if(raiz == null){
        raiz = nuevo;
-       respuesta="registro exitoso";
-     }else{     
+     }else{
+     
        raiz = insertarAVL(nuevo, raiz);
-       respuesta="registro exitoso";
-     }  
-    }catch(Exception e){
-    respuesta="no se registro usuario";
-    }
-     return respuesta;
-    }
+      
+     }
+     
+     }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-    
-     public String inOrden(NodoArbolEstacionGeneral r){ 
-        String Respusta="";
+     public void inOrden(NodoArbolEstacionGeneral r){     
      if(r !=null){     
-     Respusta+=inOrden(r.hijoIzquierdo);     
-     Respusta+=" id: " +r.idEstacionGeneral + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena + "\n";
-     System.out.print(Respusta);
-     Respusta+=inOrden(r.hijoDerecho);
-     
+     inOrden(r.hijoIzquierdo);     
+     System.out.println("IdEstacionGeneral: " +r.IdEstacionGeneral + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena );
+     inOrden(r.hijoDerecho);
+     }     
      }
-     return Respusta;
-     }
-     
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolEstacionGeneral r){     
      if(r !=null){    
-     System.out.println(" id: " +r.idEstacionGeneral + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena);    
+     System.out.println("IdEstacionGeneral: " +r.IdEstacionGeneral + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena);    
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
      }     
@@ -189,42 +174,21 @@ public class ArbolEstacionGeneral {
      if(r !=null){            
      preOrden(r.hijoIzquierdo);  
      preOrden(r.hijoDerecho);
-     System.out.println(" id: " +r.idEstacionGeneral + " Nombre: "+ r.nombre + " Contraseña: " + r.contrasena); 
+     System.out.println("IdEstacionGeneral: " +r.IdEstacionGeneral + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena); 
      }     
      }
-     // verificar un nodo
-    public boolean Miembro(int Codau, NodoArbolEstacionGeneral R){
-		NodoArbolEstacionGeneral Aux = R;
-		boolean miembro = false;
-		while (Aux != null){
-			if (Codau==Aux.idEstacionGeneral){
-				miembro = true;
-				Aux = null;
-			}
-			else{
-				if (Codau>Aux.idEstacionGeneral)
-					Aux = Aux.hijoDerecho;
-                                        
-				else{
-					Aux = Aux.hijoIzquierdo;
-					if (Aux == null)
-						miembro = false;
-				}
-			}
-		}
-		return miembro;
-	}
-    // metodo eliminar un nodo
+     
+   // metodo eliminar un nodo
      
      public boolean eliminar(int d){
      
          NodoArbolEstacionGeneral auxiliar = raiz;
          NodoArbolEstacionGeneral padre = raiz;
          boolean esHijoIzq = true;
-         while(auxiliar.idEstacionGeneral != d){
+         while(auxiliar.IdEstacionGeneral != d){
            padre = auxiliar;
            
-           if(d<auxiliar.idEstacionGeneral){
+           if(d<auxiliar.IdEstacionGeneral){
              esHijoIzq = true;
              auxiliar= auxiliar.hijoIzquierdo;
                
@@ -287,7 +251,7 @@ public class ArbolEstacionGeneral {
          return true;
      }
      
-     //metodo encargado de devolvernos el nodo reemplazo del metodo eliminar
+     //metodo encargado de devolvernos el nodo reemplazo
      
      public NodoArbolEstacionGeneral obtenerNodoReemplazo(NodoArbolEstacionGeneral nodoreemp){
      
@@ -309,16 +273,20 @@ public class ArbolEstacionGeneral {
        return reemplazo;
        
      }
+     
      //metodo modificar nodo
-     public NodoArbolEstacionGeneral modificar_contrasena(int id, String nombrenuevo, String ContrasenaNueva){
-        NodoArbolEstacionGeneral nodo = buscar(id, raiz);
+     public NodoArbolEstacionGeneral modificar_contrasena(int id,  String nombrenuevo,String ContrasenaNueva){
+        NodoArbolEstacionGeneral nodo =buscar(id, raiz);
         
          if(nodo != null){
-         nodo.nombre = nombrenuevo;
+         
          nodo.contrasena = ContrasenaNueva;
-             
+         nodo.nombre = nombrenuevo;
+         
          }
          return nodo;
       
      }
+     
+     
 }

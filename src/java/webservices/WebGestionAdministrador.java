@@ -25,7 +25,7 @@ public class WebGestionAdministrador {
         //TODO write your implementation code here:
         
          
-        String respuesta=ArbolAVL.arbolito.insertar( contrasena, correo);
+        String respuesta= ArbolAVL.listaadmin.insertar( contrasena, correo);
         return respuesta;
     }
 
@@ -35,8 +35,8 @@ public class WebGestionAdministrador {
     @WebMethod(operationName = "MostrarAdmin")
     public String MostrarAdmin() {
         //TODO write your implementation code here:
-        NodoArbolAVL r = ArbolAVL.arbolito.obtenerRaiz();
-         String Respuesta =ArbolAVL.arbolito.inOrden(r);
+        NodoArbolAVL r = ArbolAVL.listaadmin.obtenerRaiz();
+         String Respuesta =ArbolAVL.listaadmin.inOrden(r);
          return Respuesta;
       }
 
@@ -46,8 +46,8 @@ public class WebGestionAdministrador {
     @WebMethod(operationName = "VerificarNodo")
     public boolean VerificarNodo(@WebParam(name = "correo") String correo) {
         
-        NodoArbolAVL r = ArbolAVL.arbolito.obtenerRaiz();
-        return ArbolAVL.arbolito.Miembro(correo,  r);
+        NodoArbolAVL r = ArbolAVL.listaadmin.obtenerRaiz();
+        return ArbolAVL.listaadmin.Miembro(correo,  r);
         
     }
 }
