@@ -140,17 +140,22 @@ public class ArbolChofer {
      
      //metodo insertar
      
-     public void insertar(int clave, String nom, String ape,String contra){
-     
+     public String insertar(int clave, String nom, String ape,String contra){
+      String Respuesta="";
+      try{
      NodoArbolChofer nuevo = new NodoArbolChofer(clave,nom,ape,contra);
      if(raiz == null){
        raiz = nuevo;
+       Respuesta ="Se registro Correctamente el chofer";
      }else{
      
        raiz = insertarAVL(nuevo, raiz);
-      
+      Respuesta ="Se registro Correctamente el chofer";
      }
-     
+      }catch(Exception e){
+      Respuesta="No se registro el Chofer";
+      }
+      return Respuesta;
      }
      //recorridos
      //metodo para recorrer el  arbol inOrden
@@ -163,15 +168,7 @@ public class ArbolChofer {
      }  
      return Resultado;
      }
-      public String inOrden2(NodoArbolChofer r){     
-     String Respuesta="";
-     if(r !=null){     
-     Respuesta+=inOrden2(r.hijoIzquierdo);     
-     Respuesta+=  r.IdChofer + "," ;
-     Respuesta+=inOrden2(r.hijoDerecho);
-     }     
-     return Respuesta;
-     }
+     
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolChofer r){     
      if(r !=null){    
@@ -299,5 +296,25 @@ public class ArbolChofer {
       
      }
      
-      
+     public boolean Miembro(int clave, NodoArbolChofer R){	
+         NodoArbolChofer Aux = R;
+		boolean miembro = false;
+		while (Aux != null){
+			if (clave==Aux.IdChofer){
+				miembro = true;
+				Aux = null;
+			}
+			else{
+				if (clave>Aux.IdChofer )
+					Aux = Aux.hijoDerecho;
+				else{
+					Aux = Aux.hijoIzquierdo;
+					if (Aux == null)
+						miembro = false;
+				}
+			}
+		}
+		return miembro;
+	}
+ 
 }

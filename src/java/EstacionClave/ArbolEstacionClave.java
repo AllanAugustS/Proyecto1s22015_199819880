@@ -159,12 +159,14 @@ public class ArbolEstacionClave {
      }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-     public void inOrden(NodoArbolEstacionClave r){     
+     public String inOrden(NodoArbolEstacionClave r){
+     String Respuesta="";    
      if(r !=null){     
-     inOrden(r.hijoIzquierdo);     
-     System.out.println("IdEstacionClave: " +r.IdEstacionClave + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena );
-     inOrden(r.hijoDerecho);
-     }     
+     Respuesta+=inOrden(r.hijoIzquierdo);     
+     Respuesta+="IdEstacionClave: " +r.IdEstacionClave + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena + "\n";
+     Respuesta+=inOrden(r.hijoDerecho);
+     }
+     return Respuesta;
      }
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolEstacionClave r){     

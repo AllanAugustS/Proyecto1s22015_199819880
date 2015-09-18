@@ -17,7 +17,7 @@ public class ListaBus {
      NodoBus Cabeza;
     NodoBus Fin;
     static int cantidad;
-
+ public static ListaBus listabuses = new ListaBus();
     public ListaBus() {
     cantidad=0;
     Cabeza = null;
@@ -53,17 +53,25 @@ public class ListaBus {
     
     //metodo insertar al final de la lista
     
-    public void insertarFinal(int id){
+    public String insertarFinal(int id){
+    String Respuesta="";
+    try{
     NodoBus nuevo = new NodoBus(id);
     if(EstaVacia()){
     Cabeza = nuevo;
     Fin = nuevo;
+    Respuesta= "Se ingreso correctamente  el Bus";
     }else{
     
     enlazar(Fin, nuevo);
     Fin = nuevo;
+    Respuesta= "Se ingreso correctamente  el Bus";
+    }
+    }catch(Exception e){
+    Respuesta= "No se ingreso correctamente  el Bus";
     }
     cantidad++;
+    return Respuesta;
     }
     //fin de metodo insertar al final de la lista
    // metodo para eliminar al frente o al inicio de la lista
@@ -115,15 +123,54 @@ public class ListaBus {
     //fin de metodo buscar
     //metodo para mostrar la lista
     
-    public void mostrar(){
-    
+    public String mostrar(){
+    String respuesta="";
     NodoBus iterador = Cabeza;
     while(iterador != null){
-    System.out.print(iterador.idBus +"\n");
+    respuesta+="Id Bus: " + iterador.idBus +"\n";
     iterador = iterador.siguiente;
-    }          
+    } 
+    return respuesta;
     }
     //fin metodo mostrar lista
+    // metodo mostrar ordenado por burbuja 
+   public String ordenaBurbuja(){
+        NodoBus iterador = Cabeza;
+        NodoBus iterador2= Cabeza;
+        while(iterador.anterior !=null){
+             iterador = iterador.anterior;
+        }
+        NodoBus s = null;
+        NodoBus p = null;
+        int temporal1;
+        int burbuja= 1;
+        while(burbuja!=0){
+        burbuja=0;
+        p=iterador;
+          while(p!=null){
+           s=p;
+           p=p.siguiente;
+           if(p!= null){
+            if(s.idBus>p.idBus){
+               temporal1 = p.idBus;
+               p.idBus=s.idBus;
+               s.idBus=temporal1;
+               burbuja++;
+            }
+           }
+          
+          }
+        }
+    
+     String respuesta="";
+   
+    while(iterador2 != null){
+    respuesta+="Id Bus: " + iterador2.idBus +"\n";
+    iterador2 = iterador2.siguiente;
+    } 
+    return respuesta;
+    }
+    //fin de metodo mostrar ordenado burbuja
     //metodo eliminar nodo
     public void eliminar(int id){
     

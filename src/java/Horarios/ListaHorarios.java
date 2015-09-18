@@ -58,17 +58,25 @@ public class ListaHorarios {
     
     //metodo insertar al final de la lista
     
-    public void insertarFinal(String rut,String horaI,String horaF, String fec,int clavebus,int claveChofer){
+    public String insertarFinal(String rut,String horaI,String horaF, String fec,int clavebus,int claveChofer){
+    String Respuesta="";
+    try{
     NodoHorarios nuevo = new NodoHorarios(rut,horaI,horaF,fec,clavebus,claveChofer);
     if(EstaVacia()){
     Cabeza = nuevo;
     Fin = nuevo;
+    Respuesta= "Se asigno correctamente el bus";
     }else{
     
     enlazar(Fin, nuevo);
     Fin = nuevo;
+    Respuesta= "Se asigno correctamente el bus";
+    }
+    }catch(Exception e){
+    Respuesta= "No se asigno correctamente  el Bus";
     }
     cantidad++;
+    return Respuesta;
     }
     //fin de metodo insertar al final de la lista
    // metodo para eliminar al frente o al inicio de la lista
@@ -124,12 +132,12 @@ public class ListaHorarios {
     String respuesta="";
     NodoHorarios iterador = Cabeza;
     while(iterador != null){
-    respuesta+= "Hora Inicial:" + iterador.horarioInicio + " Hora Final: " + iterador.horarioFinal + " Fecha: " + iterador.fecha + " id Bus: " + iterador.idBus + " id Chofer : " + iterador.idChofer + "\n";
+    respuesta+= "Ruta: " + iterador.ruta + " Hora Inicial:" + iterador.horarioInicio + " Hora Final: " + iterador.horarioFinal + " Fecha: " + iterador.fecha + " id Bus: " + iterador.idBus + " id Chofer : " + iterador.idChofer + "\n";
     iterador = iterador.siguiente;
     }
     return respuesta;
     }
-    
+    //metodo ordenamiento de bus  por burbuja
     
 //  
     public void eliminar(String fecha){

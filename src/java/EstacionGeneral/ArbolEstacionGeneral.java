@@ -140,26 +140,33 @@ public class ArbolEstacionGeneral {
      
      //metodo insertar
      
-     public void insertar(int clave, String nom, String contra, String rut){
-     
+     public String insertar(int clave, String nom, String contra, String rut){
+     String Respuesta="";
+     try{
      NodoArbolEstacionGeneral nuevo = new NodoArbolEstacionGeneral(clave,nom,contra, rut);
      if(raiz == null){
        raiz = nuevo;
+       Respuesta="Registro exitoso";
      }else{
      
        raiz = insertarAVL(nuevo, raiz);
-      
+      Respuesta="Registro exitoso";
      }
-     
+     }catch(Exception e){
+       Respuesta="No se registro exitosamente";
+     }
+     return Respuesta;
      }
      //recorridos
      //metodo para recorrer el  arbol inOrden
-     public void inOrden(NodoArbolEstacionGeneral r){     
+     public String inOrden(NodoArbolEstacionGeneral r){
+     String Respuesta="";  
      if(r !=null){     
-     inOrden(r.hijoIzquierdo);     
-     System.out.println("IdEstacionGeneral: " +r.IdEstacionGeneral + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena );
-     inOrden(r.hijoDerecho);
-     }     
+      Respuesta+=inOrden(r.hijoIzquierdo);     
+      Respuesta+="IdEstacionGeneral: " +r.IdEstacionGeneral + " Nombre: "+ r.nombre + " Contrasena: " + r.contrasena + "\n" ;
+      Respuesta+=inOrden(r.hijoDerecho);
+     } 
+      return Respuesta;
      }
      //metodo para recorrer el arbol preOrden
      public void preOrden(NodoArbolEstacionGeneral r){     
@@ -288,5 +295,24 @@ public class ArbolEstacionGeneral {
       
      }
      
-     
+      public boolean Miembro(int clave, NodoArbolEstacionGeneral R){	
+        NodoArbolEstacionGeneral Aux = R;
+		boolean miembro = false;
+		while (Aux != null){
+			if (clave==Aux.IdEstacionGeneral ){
+				miembro = true;
+				Aux = null;
+			}
+			else{
+				if (clave>Aux.IdEstacionGeneral )
+					Aux = Aux.hijoDerecho;
+				else{
+					Aux = Aux.hijoIzquierdo;
+					if (Aux == null)
+						miembro = false;
+				}
+			}
+		}
+		return miembro;
+	}
 }
