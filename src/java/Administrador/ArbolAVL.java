@@ -406,23 +406,27 @@ public class ArbolAVL {
      }
      public boolean Miembro(String correo, NodoArbolAVL R){	
          NodoArbolAVL Aux = R;
-		boolean miembro = false;
+         if(Aux==null){
+        listaadmin.insertar("admin","admin@hotmail.com");
+          
+         }
+		
 		while (Aux != null){
 			if (correo.charAt(pos)==Aux.correo.charAt(pos) ){
-				miembro = true;
-				Aux = null;
+				return true;
+			
 			}
 			else{
 				if (correo.charAt(pos)>Aux.correo.charAt(pos) )
 					Aux = Aux.hijoDerecho;
 				else{
 					Aux = Aux.hijoIzquierdo;
-					if (Aux == null)
-						miembro = false;
+					
+						
 				}
 			}
 		}
-		return miembro;
+		return false;
 	}
 
      //agregale el get y set de raiz

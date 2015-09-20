@@ -16,6 +16,7 @@ import EstacionClave.NodoArbolEstacionClave;
 import EstacionGeneral.ArbolEstacionGeneral;
 import EstacionGeneral.NodoArbolEstacionGeneral;
 import Horarios.ListaHorarios;
+import Ruta.ListaRuta;
 /**
  *
  * @author allan
@@ -186,5 +187,14 @@ public class WebGestionAdministrador {
     public String MostrarAsignacion() {
        String Respuesta =ListaHorarios.listaasignaciones.mostrar();
          return Respuesta;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "InsertarRuta")
+    public String InsertarRuta(@WebParam(name = "ruta") String ruta) {
+        String respuesta= ListaRuta.listadorutas.insertarFinal(ruta);
+        return respuesta;
     }
 }
